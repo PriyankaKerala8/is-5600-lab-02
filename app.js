@@ -5,31 +5,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const allStocks = JSON.parse(stockContent); // from stocks-complete.js
   const allUsers = JSON.parse(userContent);   // from users.js
 
-  const saveBtn = document.querySelector('#saveButton');
-  const removeBtn = document.querySelector('#deleteButton');
-
+  const saveBtn = document.querySelector('#btnSave');     // ✅ matches HTML
+  const removeBtn = document.querySelector('#btnDelete'); // ✅ matches HTML
   displayUserList(allUsers, allStocks);
 
   // 💾 Update and save user info
   saveBtn.addEventListener('click', (e) => {
     e.preventDefault(); // prevent page reload
   
-     const saveBtn = document.querySelector('#btnSave'); // ✅ correct ID from HTML
-
-  
-    const userToUpdate = allUsers.find(u => u.id == targetId);
-  
-    if (userToUpdate) {
-      userToUpdate.user.firstname = document.querySelector('#firstname').value;
-      userToUpdate.user.lastname = document.querySelector('#lastname').value;
-      userToUpdate.user.address = document.querySelector('#address').value;
-      userToUpdate.user.city = document.querySelector('#city').value;
-      userToUpdate.user.email = document.querySelector('#email').value;
+    const userId = document.querySelector('#userID').value;
+    const userIndex = allUsers.findIndex(user => user.id == userId);
+    
+    if (userIndex !== -1) {
+      // Update values from the form
+      allUsers[userIndex].user.firstname = document.querySelector('#firstname').value;
+      allUsers[userIndex].user.lastname = document.querySelector('#lastname').value;
+      allUsers[userIndex].user.address = document.querySelector('#address').value;
+      allUsers[userIndex].user.city = document.querySelector('#city').value;
+      allUsers[userIndex].user.email = document.querySelector('#email').value;
   
       displayUserList(allUsers, allStocks); // refresh the sidebar list
-  
-      // Optional: repopulate the form to reflect updates
-      populateForm(userToUpdate);
+      populateForm(allUsers[userIndex]);
+      renderPortfolio(allUsers[userIndex], allStocks);
     }
   });
 
