@@ -1,5 +1,5 @@
-// ✅ Sunil Kasu's Custom Dashboard Script
-// Handles stock portfolios, user info, and interactivity
+
+// This will handle stock portfolios, user info, and interactivity
 
 document.addEventListener('DOMContentLoaded', () => {
   const allStocks = JSON.parse(stockContent); // from stocks-complete.js
@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
   saveBtn.addEventListener('click', (e) => {
     e.preventDefault(); // prevent page reload
   
-    const targetId = document.querySelector('#userID').value;
+     const saveBtn = document.querySelector('#btnSave'); // ✅ correct ID from HTML
+
   
     const userToUpdate = allUsers.find(u => u.id == targetId);
   
