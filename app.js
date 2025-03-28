@@ -36,8 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ❌ Remove user
   removeBtn.addEventListener('click', (e) => {
     e.preventDefault();
-
-    const deleteId = document.querySelector('#userID').value;
+    const removeBtn = document.querySelector('#btnDelete'); // ✅ matches HTML
     const idx = allUsers.findIndex(u => u.id == deleteId);
 
     if (idx !== -1) {
