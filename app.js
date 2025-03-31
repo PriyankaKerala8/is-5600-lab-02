@@ -4,13 +4,15 @@
 document.addEventListener('DOMContentLoaded', () => {
   const allStocks = JSON.parse(stockContent); // from stocks-complete.js
   const allUsers = JSON.parse(userContent);   // from users.js
-
-  const saveBtn = document.querySelector('#btnSave');     // ✅ matches HTML
-  const removeBtn = document.querySelector('#btnDelete'); // ✅ matches HTML
+  
+  const updateButton = document.querySelector('#btnSave');     // ✅ matches HTML
+  const removeBtn = document.querySelector('#btnDelete');      // ✅ matches HTML
+  
   displayUserList(allUsers, allStocks);
+ 
 
   // 💾 Update and save user info
-  saveBtn.addEventListener('click', (e) => {
+  updateButton.addEventListener('click', (e) => {
     e.preventDefault(); // prevent page reload
   
     const userId = document.querySelector('#userID').value;
@@ -33,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ❌ Remove user
   removeBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    const removeBtn = document.querySelector('#btnDelete'); // ✅ matches HTML
+    const deleteId = document.querySelector('#userID').value;
     const idx = allUsers.findIndex(u => u.id == deleteId);
 
     if (idx !== -1) {
@@ -56,16 +58,18 @@ function displayUserList(userArr, stockArr) {
     list.appendChild(li);
   });
 
-  list.addEventListener('click', (event) => {
-    const userId = event.target.id;
-    const selected = userArr.find(p => p.id == userId);
-    if (selected) {
-      fillUserForm(selected);
-      showPortfolio(selected, stockArr);
-    }
-  });
+  list.addEventListener('click', (event) => onUserSelected(event, userArr, stockArr));
 }
 
+// Only keep ONE version of this function
+function onUserSelected(event, userArr, stockArr) {
+  const userId = event.target.id;
+  const selected = userArr.find(p => p.id == userId);
+  if (selected) {
+    fillUserForm(selected);
+    showPortfolio(selected, stockArr);
+  }
+}
 
 // 🧾 Fill form with selected user's info
 function fillUserForm(data) {
